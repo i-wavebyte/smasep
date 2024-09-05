@@ -15,11 +15,15 @@ import Login from "./layout/Login/Login";
 import Register from "./layout/Register/Register";
 import "@mantine/notifications/styles.css";
 import { Notifications } from "@mantine/notifications";
+import Private from "./components/Private/Private";
+import Congres from "./layout/Congres/Congres";
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
   { path: "/SEP", element: <SEP /> },
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
+  { path: "/private", element: <Private /> },
+  { path: "/congres", element: <Congres /> },
 ]);
 export default function App() {
   return (

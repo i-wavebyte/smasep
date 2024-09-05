@@ -14,11 +14,12 @@ import classes from "./AuthenticationTitle.module.css";
 import { IconLock } from "@tabler/icons-react";
 import { useState } from "react";
 import { notifications } from "@mantine/notifications";
+import { useNavigate } from "react-router-dom";
 
 export function AuthenticationTitle() {
-  const password = "password";
+  const password = "smasep20";
   const [value, setValue] = useState("");
-
+  const navigate = useNavigate();
   function checkPassword() {
     if (value === password) {
       console.log("password correct");
@@ -27,6 +28,8 @@ export function AuthenticationTitle() {
         message: "Bienvenue sur le site",
         color: "green",
       });
+      window.localStorage.setItem("password", password);
+      navigate("/private");
     } else {
       notifications.show({
         title: "Le mot de passe entré est incorrect",

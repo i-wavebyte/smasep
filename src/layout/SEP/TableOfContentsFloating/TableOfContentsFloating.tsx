@@ -31,7 +31,11 @@ export function TableOfContentsFloating() {
       }}
       key={item.label}
       className={cx(classes.link, { [classes.linkActive]: active === index })}
-      style={{ paddingLeft: `calc(${item.order} * var(--mantine-spacing-md))` }}
+      style={{
+        paddingLeft: `calc(${item.order} * var(--mantine-spacing-md))`,
+        fontSize: rem(12),
+        overflow: "hidden",
+      }}
     >
       {item.label}
     </Box>

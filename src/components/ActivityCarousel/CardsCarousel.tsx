@@ -9,6 +9,7 @@ import {
   rem,
   Box,
   Overlay,
+  Badge,
 } from "@mantine/core";
 import classes from "./CardsCarousel.module.css";
 import { useRef, useState } from "react";
@@ -30,9 +31,6 @@ function Card({ image, title, category }: CardProps) {
       className={classes.card}
     >
       <div>
-        <Text className={classes.category} size="xs">
-          {category}
-        </Text>
         <Title order={3} className={classes.title}>
           {title}
         </Title>
@@ -160,7 +158,7 @@ export function CardsCarousel() {
   return (
     <Box px={124} py={64}>
       <Box mb={32} w={"100%"} ta={"center"}>
-        <Title>Activités</Title>
+        <Title>Évènements</Title>
       </Box>
       <Carousel
         loop
