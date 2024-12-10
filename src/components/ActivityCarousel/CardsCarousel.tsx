@@ -10,10 +10,12 @@ import {
   Box,
   Overlay,
   Badge,
+  Group,
 } from "@mantine/core";
 import classes from "./CardsCarousel.module.css";
 import { useRef, useState } from "react";
 import Autoplay from "embla-carousel-autoplay";
+import { IconChevronRight } from "@tabler/icons-react";
 
 interface CardProps {
   image: string;
@@ -35,6 +37,11 @@ function Card({ image, title, category }: CardProps) {
           {title}
         </Title>
       </div>
+      <Group w={"100%"} justify="right" align="center">
+        <Button className={classes.more}>
+          En Savoir plus <IconChevronRight size={"24"}></IconChevronRight>
+        </Button>
+      </Group>
     </Paper>
   );
 }

@@ -67,9 +67,9 @@ export function Annoucements() {
       <Carousel
         loop
         dragFree
-        slideSize={{ base: "100%", sm: "25%" }}
+        slideSize={{ base: "100%", sm: data.length == 1 ? "50%" : "25%" }}
         slideGap={{ base: rem(2), sm: "xl" }}
-        align="start"
+        align={data.length == 1 ? "center" : "start"}
         slidesToScroll={mobile ? 1 : 1}
         getEmblaApi={setEmbla}
         plugins={[autoplay.current]}

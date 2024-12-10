@@ -1,11 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Carrossel3d.css";
-import { Image } from "@mantine/core";
+import { AspectRatio, Image, Modal, Stack } from "@mantine/core";
 import roche from "./../../../assets/images/roche.png";
 import biologix from "./../../../assets/images/biologix.png";
 import merck from "./../../../assets/images/merck.png";
 import sanofi from "./../../../assets/images/sanofi.png";
 import novartis from "./../../../assets/images/novartis.png";
+import { useDisclosure } from "@mantine/hooks";
+
+const partners = [
+  { name: "roche", logo: roche, video: "NpEaa2P7qZI" },
+  { name: "biologix", logo: biologix, video: "NpEaa2P7qZI" },
+  { name: "merck", logo: merck, video: "NpEaa2P7qZI" },
+  { name: "novartis", logo: novartis, video: "NpEaa2P7qZI" },
+  { name: "sanofi", logo: sanofi, video: "NpEaa2P7qZI" },
+];
+
 const Carrossel3d = () => {
   useEffect(() => {
     const container = document.querySelector(".container") as HTMLElement;
@@ -142,13 +152,62 @@ const Carrossel3d = () => {
       initEvents();
     }
   }, []);
+  const [opened, { open, close }] = useDisclosure(false);
+
+  const [selectedPartner, SetSelectedPartner] = useState({
+    name: "",
+    logo: "",
+    video: "NpEaa2P7qZI",
+  });
+
+  function openModal(partner: string) {
+    SetSelectedPartner(
+      getPartner(partner) || { name: "", logo: "", video: "NpEaa2P7qZI" }
+    );
+    open();
+    console.log(partner);
+  }
+
+  function getPartner(name: string) {
+    return partners.find((partner) => partner.name === name);
+  }
 
   return (
     <div className="conteudo__geral">
+      <Modal
+        opened={opened}
+        onClose={close}
+        withCloseButton={false}
+        centered
+        size={"lg"}
+      >
+        <Stack w={"100%"} align="center">
+          <Image
+            src={selectedPartner.logo}
+            alt="roche"
+            component="img"
+            className="partner-image"
+            w={"128"}
+          />
+          <AspectRatio ratio={16 / 9} w={"100%"}>
+            <iframe
+              src={`https://www.youtube.com/embed/${selectedPartner.video}`}
+              title="YouTube video player"
+              allow="accelerometer; 
+                    autoplay; 
+                    clipboard-write; 
+                    encrypted-media; 
+                    gyroscope; 
+                    picture-in-picture; 
+                    web-share"
+            ></iframe>
+          </AspectRatio>
+        </Stack>
+      </Modal>
       <div className="container">
         <div className="container-carrossel">
           <div className="carrossel">
-            <div className="carrossel-item">
+            <div className="carrossel-item" onClick={() => openModal("roche")}>
               <div>
                 <Image
                   src={roche}
@@ -158,7 +217,7 @@ const Carrossel3d = () => {
                 />
               </div>
             </div>
-            <div className="carrossel-item">
+            <div className="carrossel-item" onClick={() => openModal("merck")}>
               <div>
                 <Image
                   src={merck}
@@ -168,7 +227,10 @@ const Carrossel3d = () => {
                 />
               </div>
             </div>
-            <div className="carrossel-item">
+            <div
+              className="carrossel-item"
+              onClick={() => openModal("biologix")}
+            >
               <div>
                 <Image
                   src={biologix}
@@ -178,21 +240,24 @@ const Carrossel3d = () => {
                 />
               </div>
             </div>
-            <div className="carrossel-item">
+            <div className="carrossel-item" onClick={() => openModal("sanofi")}>
               <div>
                 <Image
                   src={sanofi}
-                  alt="roche"
+                  alt="sanofi"
                   component="img"
                   className="partner-image"
                 />
               </div>
             </div>
-            <div className="carrossel-item">
+            <div
+              className="carrossel-item"
+              onClick={() => openModal("novartis")}
+            >
               <div>
                 <Image
                   src={novartis}
-                  alt="roche"
+                  alt="novartis"
                   component="img"
                   className="partner-image"
                 />

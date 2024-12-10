@@ -81,13 +81,14 @@ const Congres = () => {
                     style={{
                       textShadow: "0px 0px 4px #000000, 0px 0px 4px #000000",
                     }}
-                  >
-                    {video.title}
-                  </Text>
+                  ></Text>
                 </Group>
               </BackgroundImage>
             </AspectRatio>
-            <Text mt={"sm"} mb={"xl"} fw="600">
+            <Text mt={"sm"} fw="600">
+              {video.title}
+            </Text>
+            <Text mb={"xl"} fw="600" c={"dimmed"} size="sm">
               {video.speaker}
             </Text>
           </Box>

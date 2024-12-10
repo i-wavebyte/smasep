@@ -12,9 +12,10 @@ import {
   Text,
 } from "@mantine/core";
 import { IconCalendar } from "@tabler/icons-react";
-import React from "react";
+import React, { useEffect } from "react";
 import videoThumbnail from "./../../assets/images/video-thumbnail.webp";
 import { useDisclosure } from "@mantine/hooks";
+
 interface Congres {
   title: string;
   subTitle: string;
@@ -32,14 +33,13 @@ interface Video {
   video: string;
 }
 
-const data: Congres[] = [
+export const Congresdata: Congres[] = [
   {
     title: "4éme Speaker tour",
     subTitle: "Autour de la sclérose en plaques",
     ville: "Ifrane",
     date: "13 et 14 Janvier 2023",
-    banner:
-      "https://i0.wp.com/www.visitthemorocco.com/wp-content/uploads/2023/09/Ifrane-scaled.jpg?fit=2560%2C1440&ssl=1",
+    banner: "https://www.welovebuzz.com/wp-content/uploads/2018/01/img51.jpg",
     videos: [
       {
         title: "Mot du Président",
@@ -101,28 +101,42 @@ const data: Congres[] = [
     ],
     ePosters: [],
   },
+
   {
-    title: "test",
-    subTitle: "",
-    ville: "",
-    date: "",
-    videos: [],
+    title: "5éme Speaker tour",
+    subTitle: "tes",
+    ville: "casablanca",
+    date: "25 octobre 2023",
+    videos: [
+      {
+        title: "Progression et impact d’Ocrevus en traitement précoce",
+        speaker: "Symposium Roche",
+        image:
+          "https://e0.pxfuel.com/wallpapers/1005/683/desktop-wallpaper-morocco-page-7-casablanca-morocco.jpg",
+        video: "uuv1j5q7zkU",
+      },
+    ],
     ePosters: [],
-    banner: "",
+    banner:
+      "https://t3.ftcdn.net/jpg/02/67/20/10/360_F_267201056_wcEH6uQ6xu5oNHtY9Hq3YOhDwe1zk1XX.jpg",
   },
 ];
 
-const PrivateContent = () => {
+const PrivateContent = ({ selected }: any) => {
   function renderTabList() {
-    return data.map((congres) => {
-      return <Tabs.Tab value={congres.title}>{congres.title}</Tabs.Tab>;
+    return Congresdata.map((congres) => {
+      return (
+        <Tabs.Tab value={congres.title} key={congres.title}>
+          {congres.title}
+        </Tabs.Tab>
+      );
     });
   }
 
   function renderPanels() {
-    return data.map((congres) => {
+    return Congresdata.map((congres) => {
       return (
-        <Tabs.Panel value={congres.title}>
+        <Tabs.Panel value={congres.title} key={congres.title}>
           <AspectRatio ratio={6} w={"100%"} mb={"xl"}>
             <Box h={"100%"} w={"100%"}>
               <BackgroundImage
@@ -170,7 +184,9 @@ const PrivateContent = () => {
   const [selectedVideo, setSelectedVideo] = React.useState("");
 
   const [opened, { open, close }] = useDisclosure(false);
-
+  useEffect(() => {
+    console.log(selected);
+  }, [selected]);
   function handleOpenVideo(video: string) {
     setSelectedVideo(video);
     console.log("video", video);
@@ -180,7 +196,11 @@ const PrivateContent = () => {
   function renderVideos(videos: Video[]) {
     return videos.map((video, index) => {
       return (
-        <Grid.Col span={3} onClick={() => handleOpenVideo(video.video)}>
+        <Grid.Col
+          span={3}
+          onClick={() => handleOpenVideo(video.video)}
+          key={video.title}
+        >
           <Box style={{ cursor: "pointer" }}>
             <AspectRatio ratio={16 / 9} w={"316px"}>
               <BackgroundImage src={video.image} radius="sm" p={"xl"}>
@@ -193,14 +213,15 @@ const PrivateContent = () => {
                     style={{
                       textShadow: "0px 0px 4px #000000, 0px 0px 4px #000000",
                     }}
-                  >
-                    {video.title}
-                  </Text>
+                  ></Text>
                 </Group>
               </BackgroundImage>
             </AspectRatio>
-            <Text mt={"sm"} mb={"xl"} fw="600">
-              {video.speaker}
+            <Text mt={"sm"} fw="600" size="md">
+              {video.title}
+            </Text>
+            <Text mb={"xl"} fw="600" c={"dimmed"} size="sm">
+              {video.speaker || "..."}
             </Text>
           </Box>
         </Grid.Col>
@@ -233,7 +254,7 @@ const PrivateContent = () => {
           </AspectRatio>
         </Modal.Body>
       </Modal>
-      <Tabs defaultValue={data[0].title} w={"85rem"}>
+      <Tabs defaultValue={selected} w={"85rem"}>
         <Tabs.List>{renderTabList()}</Tabs.List>
         {renderPanels()}
       </Tabs>
