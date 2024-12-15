@@ -3,9 +3,11 @@ import {
   IconBrandTwitter,
   IconBrandYoutube,
   IconBrandInstagram,
+  IconBrandFacebook,
 } from "@tabler/icons-react";
 import logo from "./../../assets/images/logo.png";
 import classes from "./FooterLinks.module.css";
+import { Link } from "react-router-dom";
 
 const data = [
   //   {
@@ -29,9 +31,14 @@ const data = [
   {
     title: "Communauté",
     links: [
-      { label: "Twitter", link: "#" },
-      { label: "Facebook", link: "#" },
-      { label: "Youtube", link: "#" },
+      {
+        label: "Instagram",
+        link: "https://www.instagram.com/s.m.a.s.e.p?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+      },
+      {
+        label: "Facebook",
+        link: "https://www.facebook.com/profile.php?id=100093578005028",
+      },
     ],
   },
 ];
@@ -44,7 +51,7 @@ export function FooterLinks() {
         className={classes.link}
         component="a"
         href={link.link}
-        onClick={(event) => event.preventDefault()}
+        target="_blank"
       >
         {link.label}
       </Text>
@@ -78,22 +85,28 @@ export function FooterLinks() {
           wrap="nowrap"
         >
           <ActionIcon size="lg" color="gray" variant="subtle">
-            <IconBrandTwitter
-              style={{ width: rem(18), height: rem(18) }}
-              stroke={1.5}
-            />
+            <Link
+              to={"https://www.facebook.com/profile.php?id=100093578005028"}
+              target="_blank"
+            >
+              <IconBrandFacebook
+                style={{ width: rem(18), height: rem(18) }}
+                stroke={1.5}
+              />
+            </Link>
           </ActionIcon>
           <ActionIcon size="lg" color="gray" variant="subtle">
-            <IconBrandYoutube
-              style={{ width: rem(18), height: rem(18) }}
-              stroke={1.5}
-            />
-          </ActionIcon>
-          <ActionIcon size="lg" color="gray" variant="subtle">
-            <IconBrandInstagram
-              style={{ width: rem(18), height: rem(18) }}
-              stroke={1.5}
-            />
+            <Link
+              to={
+                "https://www.instagram.com/s.m.a.s.e.p?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              }
+              target="_blank"
+            >
+              <IconBrandInstagram
+                style={{ width: rem(18), height: rem(18) }}
+                stroke={1.5}
+              />
+            </Link>
           </ActionIcon>
         </Group>
       </Container>
