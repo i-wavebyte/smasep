@@ -1,5 +1,5 @@
 import { Carousel, Embla } from "@mantine/carousel";
-import { useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery, useViewportSize } from "@mantine/hooks";
 import {
   Paper,
   Text,
@@ -154,6 +154,7 @@ export function CardsCarousel() {
   const theme = useMantineTheme();
   const [embla, setEmbla] = useState<Embla | null>(null);
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const { width } = useViewportSize();
   const slides = data.map((item) => (
     <Carousel.Slide key={item.title}>
       <Card {...item} />
@@ -163,13 +164,12 @@ export function CardsCarousel() {
   const autoplay = useRef(Autoplay({ delay: 2000 }));
 
   return (
-    <Box px={124} py={64}>
+    <Box px={width < 500 ? 16 : 124} py={64}>
       <Box mb={32} w={"100%"} ta={"center"}>
         <Title>Évènements</Title>
       </Box>
       <Carousel
         loop
-        dragFree
         slideSize={{ base: "100%", sm: "25%" }}
         slideGap={{ base: rem(2), sm: "xl" }}
         align="start"

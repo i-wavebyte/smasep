@@ -8,6 +8,7 @@ import {
   Menu,
   Button,
   Text,
+  Drawer,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./HeaderSimple.module.css";
@@ -37,6 +38,7 @@ const links = [
 
 export function HeaderSimple({ navigate: nev }: any) {
   const [opened, { toggle }] = useDisclosure(false);
+
   const [active, setActive] = useState(window.location.pathname);
   const navigate = useNavigate();
   const items = links.map((link) => (
@@ -59,6 +61,60 @@ export function HeaderSimple({ navigate: nev }: any) {
   ));
   return (
     <header className={classes.header}>
+      <Drawer opened={opened} onClose={toggle}>
+        {items}
+        {localStorage.getItem("password") === "smasep20" ? (
+          <a
+            key={"private"}
+            href={"/private"}
+            className={classes.link}
+            data-active={active === "/private" || undefined}
+            onClick={(event) => {
+              //if link.link doesnt contain #, then navigate
+              if (!"/private".includes("#")) {
+                navigate("/private");
+                event.preventDefault();
+                setActive("/private");
+              }
+            }}
+          >
+            {"Contenu privé"}
+          </a>
+        ) : (
+          <Menu shadow="md" width={200}>
+            <Menu.Target>
+              <a className={classes.link}>
+                <Group gap={"xs"}>
+                  <Text fz={"md"} fw={600}>
+                    Espace professionnel
+                  </Text>{" "}
+                  <IconChevronDown size={16} />
+                </Group>
+              </a>
+            </Menu.Target>
+
+            <Menu.Dropdown>
+              <Menu.Label>Application</Menu.Label>
+              <Menu.Item
+                onClick={() => navigate("/login")}
+                leftSection={
+                  <IconKey style={{ width: rem(14), height: rem(14) }} />
+                }
+              >
+                Connexion
+              </Menu.Item>
+              <Menu.Item
+                onClick={() => navigate("/register")}
+                leftSection={
+                  <IconLockAccess style={{ width: rem(14), height: rem(14) }} />
+                }
+              >
+                Inscription
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        )}
+      </Drawer>
       <Container size="lg" className={classes.inner}>
         <Image src={logo} alt="Logo" w={250} />
         <Group gap={5} visibleFrom="xs">

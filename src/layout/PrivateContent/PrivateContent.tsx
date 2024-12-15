@@ -14,7 +14,7 @@ import {
 import { IconCalendar } from "@tabler/icons-react";
 import React, { useEffect } from "react";
 import videoThumbnail from "./../../assets/images/video-thumbnail.webp";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useViewportSize } from "@mantine/hooks";
 
 interface Congres {
   title: string;
@@ -132,12 +132,12 @@ const PrivateContent = ({ selected }: any) => {
       );
     });
   }
-
+  const { width } = useViewportSize();
   function renderPanels() {
     return Congresdata.map((congres) => {
       return (
         <Tabs.Panel value={congres.title} key={congres.title}>
-          <AspectRatio ratio={6} w={"100%"} mb={"xl"}>
+          <AspectRatio ratio={width < 700 ? 2 : 6} w={"100%"} mb={"xl"}>
             <Box h={"100%"} w={"100%"}>
               <BackgroundImage
                 src={congres.banner}
@@ -151,7 +151,7 @@ const PrivateContent = ({ selected }: any) => {
                     <Text
                       c={"white"}
                       ta={"center"}
-                      fz={"3em"}
+                      fz={width < 800 ? "1.5em" : "3em"}
                       style={{
                         textShadow:
                           "0px 0px 24px #000000, 0px 0px 24px #000000",
@@ -162,7 +162,7 @@ const PrivateContent = ({ selected }: any) => {
                     <Text
                       c={"white"}
                       ta={"center"}
-                      fz={"2em"}
+                      fz={width < 800 ? "1em" : "2em"}
                       style={{
                         textShadow:
                           "0px 0px 12px #000000, 0px 0px 12px #000000",
@@ -176,7 +176,7 @@ const PrivateContent = ({ selected }: any) => {
             </Box>
           </AspectRatio>
 
-          <Grid>{renderVideos(congres.videos)}</Grid>
+          <Grid gutter={0}>{renderVideos(congres.videos)}</Grid>
         </Tabs.Panel>
       );
     });
@@ -197,40 +197,42 @@ const PrivateContent = ({ selected }: any) => {
     return videos.map((video, index) => {
       return (
         <Grid.Col
-          span={3}
+          span={{ base: 12, sm: 6, lg: 3 }}
           onClick={() => handleOpenVideo(video.video)}
           key={video.title}
         >
-          <Box style={{ cursor: "pointer" }}>
-            <AspectRatio ratio={16 / 9} w={"316px"}>
-              <BackgroundImage src={video.image} radius="sm" p={"xl"}>
-                <Group w={"100%"} justify="center" h="100%">
-                  <Text
-                    c={"white"}
-                    size="md"
-                    ta={"center"}
-                    fw={600}
-                    style={{
-                      textShadow: "0px 0px 4px #000000, 0px 0px 4px #000000",
-                    }}
-                  ></Text>
-                </Group>
-              </BackgroundImage>
-            </AspectRatio>
-            <Text mt={"sm"} fw="600" size="md">
-              {video.title}
-            </Text>
-            <Text mb={"xl"} fw="600" c={"dimmed"} size="sm">
-              {video.speaker || "..."}
-            </Text>
-          </Box>
+          <Group w={"100%"} justify="center">
+            <Box style={{ cursor: "pointer" }}>
+              <AspectRatio ratio={16 / 9} w={"316px"}>
+                <BackgroundImage src={video.image} radius="sm" p={"xl"}>
+                  <Group w={"100%"} justify="center" h="100%">
+                    <Text
+                      c={"white"}
+                      size="md"
+                      ta={"center"}
+                      fw={600}
+                      style={{
+                        textShadow: "0px 0px 4px #000000, 0px 0px 4px #000000",
+                      }}
+                    ></Text>
+                  </Group>
+                </BackgroundImage>
+              </AspectRatio>
+              <Text mt={"sm"} fw="600" size="md" w={300}>
+                {video.title}
+              </Text>
+              <Text mb={"xl"} fw="600" c={"dimmed"} size="sm">
+                {video.speaker || "..."}
+              </Text>
+            </Box>
+          </Group>
         </Grid.Col>
       );
     });
   }
 
   return (
-    <Box w={"85rem"} m="auto" mt={"xl"}>
+    <Box maw={"85rem"} m="auto" mt={"xl"}>
       <Modal
         opened={opened}
         onClose={close}
@@ -254,7 +256,7 @@ const PrivateContent = ({ selected }: any) => {
           </AspectRatio>
         </Modal.Body>
       </Modal>
-      <Tabs defaultValue={selected} w={"85rem"}>
+      <Tabs defaultValue={selected} maw={"85rem"}>
         <Tabs.List>{renderTabList()}</Tabs.List>
         {renderPanels()}
       </Tabs>

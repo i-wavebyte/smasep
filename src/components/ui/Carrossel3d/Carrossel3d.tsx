@@ -6,7 +6,7 @@ import biologix from "./../../../assets/images/biologix.png";
 import merck from "./../../../assets/images/merck.png";
 import sanofi from "./../../../assets/images/sanofi.png";
 import novartis from "./../../../assets/images/novartis.png";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useViewportSize } from "@mantine/hooks";
 
 const partners = [
   { name: "roche", logo: roche, video: "NpEaa2P7qZI" },
@@ -171,7 +171,7 @@ const Carrossel3d = () => {
   function getPartner(name: string) {
     return partners.find((partner) => partner.name === name);
   }
-
+  const { width } = useViewportSize();
   return (
     <div className="conteudo__geral">
       <Modal

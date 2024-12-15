@@ -20,7 +20,7 @@ import {
   IconCalendar,
 } from "@tabler/icons-react";
 import videoThumbnail from "./../../assets/images/video-thumbnail.webp";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useViewportSize } from "@mantine/hooks";
 const videos = [
   {
     title: "التصلب اللويحي ومزاولة الحياة الطبيعية",
@@ -56,7 +56,7 @@ const videos = [
 ];
 const Congres = () => {
   const [selectedVideo, setSelectedVideo] = React.useState("");
-
+  const { width, height } = useViewportSize();
   const [opened, { open, close }] = useDisclosure(false);
 
   function handleOpenVideo(video: string) {
@@ -68,30 +68,35 @@ const Congres = () => {
   function renderVideos() {
     return videos.map((video, index) => {
       return (
-        <Grid.Col span={3} onClick={() => handleOpenVideo(video.video)}>
-          <Box style={{ cursor: "pointer" }}>
-            <AspectRatio ratio={16 / 9} w={"316px"}>
-              <BackgroundImage src={video.image} radius="sm" p={"xl"}>
-                <Group w={"100%"} justify="center" h="100%">
-                  <Text
-                    c={"white"}
-                    size="xl"
-                    ta={"center"}
-                    fw={600}
-                    style={{
-                      textShadow: "0px 0px 4px #000000, 0px 0px 4px #000000",
-                    }}
-                  ></Text>
-                </Group>
-              </BackgroundImage>
-            </AspectRatio>
-            <Text mt={"sm"} fw="600">
-              {video.title}
-            </Text>
-            <Text mb={"xl"} fw="600" c={"dimmed"} size="sm">
-              {video.speaker}
-            </Text>
-          </Box>
+        <Grid.Col
+          span={{ base: 12, md: 6, lg: 3 }}
+          onClick={() => handleOpenVideo(video.video)}
+        >
+          <Group w={"100%"} justify="center">
+            <Box style={{ cursor: "pointer" }}>
+              <AspectRatio ratio={16 / 9} w={"316px"}>
+                <BackgroundImage src={video.image} radius="sm" p={"xl"}>
+                  <Group w={"100%"} justify="center" h="100%">
+                    <Text
+                      c={"white"}
+                      size="xl"
+                      ta={"center"}
+                      fw={600}
+                      style={{
+                        textShadow: "0px 0px 4px #000000, 0px 0px 4px #000000",
+                      }}
+                    ></Text>
+                  </Group>
+                </BackgroundImage>
+              </AspectRatio>
+              <Text mt={"sm"} fw="600">
+                {video.title}
+              </Text>
+              <Text mb={"xl"} fw="600" c={"dimmed"} size="sm">
+                {video.speaker}
+              </Text>
+            </Box>
+          </Group>
         </Grid.Col>
       );
     });
@@ -123,7 +128,7 @@ const Congres = () => {
         </Modal.Body>
       </Modal>
       <HeaderSimple></HeaderSimple>
-      <Stack align="center" py={"xl"} bg={"primaryBlue"}>
+      <Stack align="center" py={"xl"} px={"lg"} bg={"primaryBlue"}>
         <Title c={"white"} order={1}>
           Congrès digital patients et familles
         </Title>
@@ -132,7 +137,7 @@ const Congres = () => {
         </Title>
       </Stack>
       <Stack w={"100%"} align="center" mt={"lg"} px={"xl"}>
-        <Tabs defaultValue="gallery" w={"85rem"}>
+        <Tabs defaultValue="gallery" maw={"85rem"}>
           <Tabs.List>
             <Tabs.Tab
               value="gallery"
@@ -153,7 +158,9 @@ const Congres = () => {
               coordination : Dr.ميضافي نائلة et Dr.منير الزوبي{" "}
             </Text>
 
-            <Grid mt={"xl"}>{renderVideos()}</Grid>
+            <Grid mt={"xl"} justify="center">
+              {renderVideos()}
+            </Grid>
           </Tabs.Panel>
 
           <Tabs.Panel value="messages">Messages tab content</Tabs.Panel>

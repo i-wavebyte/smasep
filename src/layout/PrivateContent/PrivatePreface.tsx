@@ -20,7 +20,7 @@ const PrivatePreface = ({ setSelected }: any) => {
     return Congresdata.map((congres) => {
       return (
         <GridCol
-          span={4}
+          span={{ base: 12, sm: 6, lg: 4 }}
           onClick={() => setSelected(congres.title)}
           key={congres.title}
         >
@@ -69,8 +69,10 @@ const PrivatePreface = ({ setSelected }: any) => {
 
   return (
     <div>
-      <Center h={"100%"} p={"xl"}>
-        <Grid w={"1024px"}>{renderCongresList()}</Grid>
+      <Center h={"100%"} p={"lg"}>
+        <Grid w={"1024px"} gutter={"xs"}>
+          {renderCongresList()}
+        </Grid>
       </Center>
     </div>
   );

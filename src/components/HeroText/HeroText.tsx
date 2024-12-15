@@ -10,11 +10,12 @@ import {
 } from "@mantine/core";
 import { Dots } from "./Dots";
 import classes from "./HeroText.module.css";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import AboutUs from "./AboutUs/AboutUs";
 
 export function HeroText() {
   const [opened, { open, close }] = useDisclosure(false);
+  const { width } = useViewportSize();
   return (
     <div style={{ backgroundColor: "#DFDFDF", padding: 32 }} id="SEP">
       <Modal
@@ -27,7 +28,11 @@ export function HeroText() {
         <AboutUs />
       </Modal>
 
-      <Container className={classes.wrapper} size={"100%"} mx={"100px"}>
+      <Container
+        className={classes.wrapper}
+        size={"100%"}
+        mx={width < 700 ? "0px" : "100px"}
+      >
         <Dots className={classes.dots} style={{ left: 0, top: 0 }} />
         <Dots className={classes.dots} style={{ left: 20, top: 0 }} />
         <Dots className={classes.dots} style={{ left: 0, top: 140 }} />
@@ -35,8 +40,8 @@ export function HeroText() {
 
         <div className={classes.inner}>
           <Center>
-            <Grid w={"66%"}>
-              <Grid.Col span={6}>
+            <Grid w={width < 700 ? "100%" : "66%"}>
+              <Grid.Col span={width < 500 ? 12 : 6}>
                 <Title className={classes.title}>
                   QUI SOMME{" "}
                   <Text component="span" className={classes.highlight} inherit>
@@ -67,7 +72,7 @@ export function HeroText() {
                   </Button>
                 </div>
               </Grid.Col>
-              <Grid.Col span={6}>
+              <Grid.Col span={width < 700 ? 12 : 6}>
                 <AspectRatio ratio={16 / 9} w={"100%"}>
                   <iframe
                     src={`https://www.youtube.com/embed/NpEaa2P7qZI`}

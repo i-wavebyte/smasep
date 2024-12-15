@@ -10,7 +10,12 @@ const SEP = () => {
   return (
     <div>
       <HeaderSimple></HeaderSimple>
-      <Group w={"100%"} justify="center" px={"xl"} align="flex-start">
+      <Group
+        w={"100%"}
+        justify="center"
+        p={width < 700 ? "8" : "xl"}
+        align="flex-start"
+      >
         <Grid justify="center" py={"xl"} align="flex-start">
           {width > 1000 && (
             <Grid.Col span={3} className="sticky-nav">
@@ -21,7 +26,7 @@ const SEP = () => {
           )}
 
           <Grid.Col span={width > 1000 ? 9 : 12}>
-            <Paper withBorder w={"100%"} p={"xl"}>
+            <Paper withBorder w={"100%"} p={width < 700 ? "8" : "xl"}>
               <Title order={1} mb={"md"} c={"primaryBlue"} id="WSEP">
                 Qu’est ce que la SEP ?
               </Title>

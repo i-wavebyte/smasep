@@ -19,6 +19,12 @@ img {
   align-items: center;
 }
 
+@media only screen and (max-width: 700px) {
+  .container {
+    transform: scale(0.7);
+  }
+}
+
 .container-carrossel {
   --widthItem: 150px;
   --heightItem: 100px;

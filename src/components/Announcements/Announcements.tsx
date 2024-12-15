@@ -1,5 +1,5 @@
 import { Carousel, Embla } from "@mantine/carousel";
-import { useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery, useViewportSize } from "@mantine/hooks";
 import {
   Paper,
   Text,
@@ -48,6 +48,7 @@ const data = [
 ];
 
 export function Annoucements() {
+  const { width } = useViewportSize();
   const theme = useMantineTheme();
   const [embla, setEmbla] = useState<Embla | null>(null);
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
@@ -60,7 +61,7 @@ export function Annoucements() {
   const autoplay = useRef(Autoplay({ delay: 2000 }));
 
   return (
-    <Box px={124} py={64}>
+    <Box px={width < 500 ? 32 : 124} py={64}>
       <Box mb={32} w={"100%"} ta={"center"}>
         <Title>Annonces</Title>
       </Box>
@@ -68,8 +69,8 @@ export function Annoucements() {
         loop
         dragFree
         slideSize={{ base: "100%", sm: data.length == 1 ? "50%" : "25%" }}
-        slideGap={{ base: rem(2), sm: "xl" }}
-        align={data.length == 1 ? "center" : "start"}
+        slideGap={{ base: rem(2), sm: width < 500 ? "xs" : "xl" }}
+        align={data.length == 1 ? (width < 500 ? "start" : "center") : "start"}
         slidesToScroll={mobile ? 1 : 1}
         getEmblaApi={setEmbla}
         plugins={[autoplay.current]}
