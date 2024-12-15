@@ -37,7 +37,7 @@ const links = [
 ];
 
 export function HeaderSimple({ navigate: nev }: any) {
-  const [opened, { toggle }] = useDisclosure(false);
+  const [opened, { toggle, close }] = useDisclosure(false);
 
   const [active, setActive] = useState(window.location.pathname);
   const navigate = useNavigate();
@@ -49,6 +49,7 @@ export function HeaderSimple({ navigate: nev }: any) {
       data-active={active === link.link || undefined}
       onClick={(event) => {
         //if link.link doesnt contain #, then navigate
+        close();
         if (!link.link.includes("#")) {
           navigate(link.link);
           event.preventDefault();
